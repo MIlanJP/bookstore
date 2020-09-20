@@ -1,6 +1,6 @@
 import firebase from 'firebase';
-import 'firebase/firestore'
-import 'firebase/auth'
+import firebase1 from 'firebase/app';
+
 import admin from 'firebase-admin'
 
 const firebaseConfig = {
@@ -20,6 +20,18 @@ const firebaseConfig = {
   export const fireStore=firebase.firestore();
   const provider=new firebase.auth.GoogleAuthProvider();
   provider.setCustomParameters({prompt:'select_account'})
+  // export const createUserProfileDocument=async(userAuth,additionalData)=>{
+  //   // if(userAuth==='') return 
+  //   const userRef=fireStore.doc('users/PPuI3rXmthxyGDqGOmML')
+  //   const snapshot=await userRef.get()
+  //   console.log(JSON.s snapshot)
+  //    fireStore.collection('users').get().then( 
+  //     (data)=>{
+  //       // console.log(data.docs)
+   
+  //     }
+  //   )
+  // }
   export const signInWithGoogle=()=>{auth.signInWithPopup(provider)}
 export default firebase;
 

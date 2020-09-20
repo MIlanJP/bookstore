@@ -3,7 +3,7 @@ import styles from "../scss/profile.module.scss";
 import {auth} from '../utils/firebase.utils'
 import {useHistory} from 'react-router'
 import Header from './header'
-
+import ItemCard from './ItemCard'
 function Profile(props) {
     useEffect(()=>{
         if(props.user===''|| props.user===null){
@@ -16,8 +16,10 @@ function Profile(props) {
         <div>
           {props.user}  profile
         </div>
+
         <button className={styles.logoutButton} onClick={()=>{auth.signOut(); history.push('/')}}>Logout</button>
-        </div>
+      
+        <ItemCard/>  </div>
     )
 }
 
