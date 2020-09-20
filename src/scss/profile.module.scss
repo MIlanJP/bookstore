@@ -1,16 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Roboto:wght@300;400;500;700;900&display=swap');
-.mainLayout{
-    width:100vw;
-    height:100vh;
-    display:flex;
-    flex-direction:row;
-    justify-content:center;
-    background:rgb(0, 0, 0);
-}
-.loginButton{
+.logoutButton{
     color: rgb(12, 12, 12);
- 
     position: relative;
     top: 50px;
     margin: 0px 20px 0px 20px;
@@ -26,6 +15,7 @@
     background:linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%);
     outline: none;
     align-items: center;
+    cursor: pointer;
     &:hover{
     background:linear-gradient(to bottom, #ff99cc , #33ccff );
     transition: .25s;

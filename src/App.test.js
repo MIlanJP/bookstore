@@ -14,15 +14,18 @@ describe("check routes of the main page",()=>{
     expect(wrapper.find(StarterPage)).toHaveLength(1)
     expect(wrapper.find(Profile)).toHaveLength(0)
     console.log(wrapper.debug())
+    wrapper.unmount()
   });
 
   test('renders component according to /profile route', () => {
     const wrapper = mount(<MemoryRouter initialEntries={ ['/profile' ]}><App /></MemoryRouter>);
-    const button=wrapper.find('[data-testid="signInButton"]')
+    const button=wrapper.find('[data-testid="signInButtons"]')
     console.log(button.debug())
-    expect(button).toHaveLength(1)
-    console.log(wrapper.debug())
+    expect(button).toHaveLength(2)
+    wrapper.unmount()
+
   });
+  
 
 })
 
