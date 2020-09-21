@@ -12,7 +12,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import { auth } from "../utils/firebase.utils";
-import { useHistory } from "react-router";
+import { useHistory,Link } from "react-router";
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MoreIcon from "@material-ui/icons/MoreVert";
@@ -136,6 +136,15 @@ useEffect(()=>{
     if(typeof props.userData!=="undefined")
     setBooksInCart(props.userData.booksInCart)
 })
+
+const handleClickForCart=()=>{
+    if(window.location.pathname==='/profile'){
+        history.push("/profile/cart")
+    }else if(window.location.pathname==='/profile/cart'){
+        history.push("/profile")
+    }
+}
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -172,7 +181,9 @@ useEffect(()=>{
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton aria-label="show 3 new mails" color="inherit">
+        <IconButton aria-label="show 3 new mails" color="inherit"
+        onClick={handleClickForCart}
+        >
           <Badge badgeContent={booksInCart} color="secondary">
             <ShoppingCartIcon />
           </Badge>
@@ -218,6 +229,10 @@ useEffect(()=>{
             </div>
             <InputBase
               placeholder="Search…"
+              value={props.searchContent}
+              onChange={(e)=>{
+                  props.setSearchContent(e.currentTarget.value)
+              }}
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
@@ -227,7 +242,9 @@ useEffect(()=>{
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 Items in Carts" color="inherit">
+            <IconButton aria-label="show 4 Items in Carts" color="inherit"
+            onClick={handleClickForCart}
+            >
               <Badge badgeContent={booksInCart} color="secondary">
                 <ShoppingCartIcon />
               </Badge>

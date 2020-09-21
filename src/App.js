@@ -78,7 +78,7 @@ checkAuthStateChange()
   return (
     <div className="App">
       <Route exact path="/" render={()=>(<Login checkAuthStateChange={checkAuthStateChange}  />)}  />
-      <Route exact path="/profile" render={()=>(<Profile userData={userData}   user={user} id={id}   />)}/>
+      <Route  path="/profile" render={()=>(<Profile userData={userData}   user={user} id={id}   />)}/>
      
     </div>
   );
