@@ -1,3 +1,4 @@
+
 .logoutButton{
     color: rgb(12, 12, 12);
     position: relative;
@@ -21,4 +22,45 @@
     transition: .25s;
     height:50px;
     }
+}
+
+.booksContainer{
+    position: relative;
+    display:flex;
+    flex-direction:"row";
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    // padding:0 200px;
+    flex-basis: 25%;
+    width: 70vw;
+    left: 15vw;
+}
+
+.bookColumn{
+    display:flex;
+    justify-content:center;
+    align-items: center;;
+    margin-bottom:30px;
+}
+.pagination{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    color: rgb(143,43,47);
+    &.paginationColor{
+        &.selectedColor{
+            color:white;
+            background-color: black;
+        }
+}
+.paginationColor{
+    color:white;
+
+    }
+}
+.circularProgress{
+    position:absolute;
+    color:black;
+    left:30vw;
+    top:30vh;
 }
