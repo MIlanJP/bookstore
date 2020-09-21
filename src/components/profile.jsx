@@ -2,10 +2,11 @@ import React,{useEffect,useState} from 'react'
 import firebase from '../utils/firebase.utils'
 import styles from "../scss/profile.module.scss";
 import {auth} from '../utils/firebase.utils'
-import {useHistory} from 'react-router'
+import {useHistory,Route} from 'react-router'
 import { makeStyles } from "@material-ui/styles";
 import { CircularProgress } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
+import Books from './Books'
 
 import Header from './header'
 import ItemCard from './ItemCard'
@@ -62,18 +63,7 @@ function Profile(props) {
            console.log("Error: " + error.code);
         });
     },[])
-    const handleChangeForPagination=(number)=>{
-        setPage(number)
-        setFrom(cardsLimit*(number-1))
-      
-        if(number===maxpage){
-            setTo(cardsLimit*(number-1)+lastPageSize);
 
-        }else{
-            setTo( cardsLimit*(number-1)+cardsLimit)
-        }
-        
-    }
     const history=useHistory();
     return (<div>
         <Header userData={props.userData}  />
@@ -82,30 +72,12 @@ function Profile(props) {
         </div>
 
         {/* <button className={styles.logoutButton} onClick={()=>{auth.signOut(); history.push('/')}}>Logout</button> */}
-      
+      <Route exact path="/profile" component={Books}/>
         {/* <ItemCard/>  */}
 
 
 
-        <div className={styles.booksContainer} >
-            
-       {listOfBooks.length===0?<CircularProgress color="secondary"  className={styles.circularProgress}  />:null } {listOfBooks.slice(from,to).map(((book,index)=>{
-          return <div className={styles.bookColumn}> <ItemCard   book={book}/></div>
-        }))}
-        </div>
-       {listOfBooks.length>0? <Pagination color="primary"  className={classes.pagination}
-       classes={{page:classes.paginationColor,selected:classes.selectedColor}}
-       onChange={(e)=>{
-           if(e.currentTarget.firstElementChild.innerHTML!==decrementInnerHtml&&e.currentTarget.firstElementChild.innerHTML!==incrementInnerHtml){
-            handleChangeForPagination( e.currentTarget.innerHTML[0]);console.log(e.currentTarget.firstElementChild.innerHTML)
-           }else if((e.currentTarget.firstElementChild.innerHTML===decrementInnerHtml)){
-                handleChangeForPagination(page-1)
-               }else{
-                   console.log(page+1)
-                handleChangeForPagination(parseInt(page)+1)
-               }
-           
-       }}  count={maxpage}  shape="rounded" />:null}
+      
 
          </div>
     )
