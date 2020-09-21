@@ -76,7 +76,7 @@ function Profile(props) {
     }
     const history=useHistory();
     return (<div>
-        <Header/>
+        <Header userData={props.userData}  />
         <div>
           {props.user}  profile
         </div>

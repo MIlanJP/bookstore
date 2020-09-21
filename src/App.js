@@ -9,12 +9,16 @@ function App() {
   let history = useHistory();
   const [bookList,setBookList]=useState()
   const [user,setUser]=useState()
+  const [userData,setUserData]=useState()
+  const[id,setId]=useState()
+  const[itemsInCart,setItemsInCart]=useState(0)
    const   checkAuthStateChange=async ()=>{
 
   let id;
   let email;
     await  auth.onAuthStateChanged( async  (userDoc)=>{
      if(userDoc===null)return;
+     setId(userDoc.uid)
       id=userDoc.uid||null
       email=userDoc.email||null
       setUser(userDoc.displayName)
@@ -26,17 +30,20 @@ function App() {
         const userRef= fireStore.doc(`users/${userDoc.uid}`)
         await userRef.get().then(async (snapShot)=>{
           console.log(snapShot.exists)
+          setUserData(snapShot.data())
           if(!snapShot.exists){
             try{
               await userRef.set({ 
                 name:user,
-                email:email
+                email:email,
+                booksInCart:0,
         
               })
             }catch(err){
          
             }
           }
+          await fireStore.collection(`users`).get()
         });
 
        }
@@ -46,16 +53,16 @@ function App() {
       // })
     
 
-      // fireStore.collection(`users`).get().then(snapShot=>{
-      //   const users=[];
-      //   snapShot.forEach(doc=>{
-      //     const data=doc.data()
-      //     users.push(data)
-      //   })
-      //   console.log(users )
-      // }).catch(err=>{
-      //   console.log(err)
-      // })
+    // await  fireStore.collection(`users`).get().then(snapShot=>{
+    //     const users=[];
+    //     snapShot.forEach(doc=>{
+    //       const data=doc.data()
+    //       users.push(data)
+    //     })
+    //     console.log(users )
+    //   }).catch(err=>{
+    //     console.log(err)
+    //   })
       // createUserProfileDocument()
    })
   //  await fireStore.collection(`users`).get().then(snapshot=>{
@@ -65,20 +72,13 @@ function App() {
 
   }
   useEffect(()=>{
-//     const ref = firebase.database().ref();
-
-// ref.on("value", function(snapshot) {
-//    console.log(snapshot.val().list);
-// }, function (error) {
-//    console.log("Error: " + error.code);
-// });
 checkAuthStateChange()
 
-  })
+  },[])
   return (
     <div className="App">
       <Route exact path="/" render={()=>(<Login checkAuthStateChange={checkAuthStateChange}  />)}  />
-      <Route exact path="/profile" render={()=>(<Profile user={user}  />)}/>
+      <Route exact path="/profile" render={()=>(<Profile userData={userData}   user={user} id={id}   />)}/>
      
     </div>
   );

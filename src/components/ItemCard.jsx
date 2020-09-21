@@ -84,12 +84,13 @@ function ItemCard(props) {
             background: "rgba(255, 255, 255, 0.95)",
             boxShadow:"0px 0px 5px 0px black",
             height: "40px",
-            width: "220px",
+            width: "184px",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            top: "70px",
+             marginTop: "70px",
             fontWeight: "600",
+            marginLeft:"27px",
         },
       }));
   const classes = useStyle();
