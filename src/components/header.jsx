@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -106,16 +106,16 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Header() {
+export default function Header(props) {
   const history = useHistory();
-
+const [booksInCart,setBooksInCart]=useState(0)
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
+// console.log(props)
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -132,7 +132,10 @@ export default function Header() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-
+useEffect(()=>{
+    if(typeof props.userData!=="undefined")
+    setBooksInCart(props.userData.booksInCart)
+})
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -170,7 +173,7 @@ export default function Header() {
     >
       <MenuItem>
         <IconButton aria-label="show 3 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
+          <Badge badgeContent={booksInCart} color="secondary">
             <ShoppingCartIcon />
           </Badge>
           
@@ -224,8 +227,8 @@ export default function Header() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
+            <IconButton aria-label="show 4 Items in Carts" color="inherit">
+              <Badge badgeContent={booksInCart} color="secondary">
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
