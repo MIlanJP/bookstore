@@ -23,19 +23,29 @@ const useStyle = makeStyles((theme) => ({
   bookName: {
       ...theme.typography.bookName,
     paddingLeft: "25px",
+    whiteSpace: "nowrap",
+    textOverflow:'ellipsis',
     textAlign: "left",
+    overflow:"hidden",
+    paddingRight: "20px",
   },
   authorName:{
     ...theme.typography.authorName,
       color:"#9D9D9D",
-    //   paddingLeft: "25px",
+      paddingLeft: "25px",
       textAlign: "left",
       lineHeight:".8rem",
+      position: "relative",
+      top: "-14px",
+      display:"flex",
+
   },
   priceColumn:{
     ...theme.typography.priceColumn,
       paddingLeft: "25px",
       textAlign: "left",
+      top: "-21px",
+      position: "relative",
   },
   addToCartButton:{
     ...theme.typography.buttonText,
@@ -51,7 +61,7 @@ const useStyle = makeStyles((theme) => ({
   },
   buttonsColumn:{
       position:'relative',
-      top:"-10px",
+      top:"-20px",
       display:"flex",
       flexDirection:"row",
       justifyContent:"space-evenly",
@@ -79,7 +89,8 @@ function ItemCard(props) {
         />
       </div>
 
-  <p className={classes.bookName}>{props.book.title} <br/> <span className={classes.authorName}> by {props.book.author}</span></p>
+  <p className={classes.bookName} maxlength="20">{props.book.title}</p>
+  <span className={classes.authorName}> by {props.book.author}</span>
   <p className={classes.priceColumn} >Rs {props.book.price}</p>
      <div className={classes.buttonsColumn}  >
          <Button className={classes.addToCartButton} 

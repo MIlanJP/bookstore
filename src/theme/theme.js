@@ -1,15 +1,19 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 import purple from '@material-ui/core/colors/purple';
 import yellow from '@material-ui/core/colors/yellow';
+import red from '@material-ui/core/colors/red';
 const fontForBookName="'Lato'"
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: purple[500],
+        main:red[500]
     },
     secondary: {
       main: yellow[500],
     },
+    themeColor:{
+        
+    }
   },
   typography: {
     bookName: {
@@ -44,6 +48,7 @@ const theme = createMuiTheme({
         fontSize: 13.5,
         textTransform: "none", 
       },
+
 },
 });
 
