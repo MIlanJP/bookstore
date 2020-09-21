@@ -88,7 +88,7 @@ function ItemCard(props) {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-             marginTop: "50px",
+             marginTop: "70px",
             fontWeight: "600",
             marginLeft:"27px",
         },
