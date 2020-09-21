@@ -65,13 +65,13 @@ function App() {
 
   }
   useEffect(()=>{
-    const ref = firebase.database().ref();
+//     const ref = firebase.database().ref();
 
-ref.on("value", function(snapshot) {
-   console.log(snapshot.val().list);
-}, function (error) {
-   console.log("Error: " + error.code);
-});
+// ref.on("value", function(snapshot) {
+//    console.log(snapshot.val().list);
+// }, function (error) {
+//    console.log("Error: " + error.code);
+// });
 checkAuthStateChange()
 
   })
