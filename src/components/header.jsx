@@ -1,12 +1,14 @@
-import React,{useState,useEffect} from "react";
+import React,{useState,useEffect,useContext} from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
+import { useSelector } from "react-redux";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import LocalLibrarySharpIcon from '@material-ui/icons/LocalLibrarySharp';
 import InputBase from "@material-ui/core/InputBase";
 import Badge from "@material-ui/core/Badge";
+import CartItemsContext from './cartItemsContext';
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -21,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
     background: "rgb(160,48,55)",
+        // position:'fixed',
+        // zIndex:4,
+        // width:'100vw',
   },
   bookIcon: {
     marginRight: theme.spacing(2),
@@ -107,8 +112,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Header(props) {
+    const cartitems=useContext(CartItemsContext)
   const history = useHistory();
-const [booksInCart,setBooksInCart]=useState(0)
+const booksInCart=useSelector(state=>state.cardquantity.items)
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -133,8 +139,9 @@ const [booksInCart,setBooksInCart]=useState(0)
     setMobileMoreAnchorEl(event.currentTarget);
   };
 useEffect(()=>{
-    if(typeof props.userData!=="undefined")
-    setBooksInCart(props.userData.booksInCart)
+    if(typeof props.userData!=="undefined"){
+
+    }
 })
 
 const handleClickForCart=()=>{
@@ -184,7 +191,7 @@ const handleClickForCart=()=>{
         <IconButton aria-label="show 3 new mails" color="inherit"
         onClick={handleClickForCart}
         >
-          <Badge badgeContent={booksInCart} color="secondary">
+          <Badge badgeContent={booksInCart} color="secondary" key={props.userData.booksInCart}  >
             <ShoppingCartIcon />
           </Badge>
           
@@ -210,7 +217,7 @@ const handleClickForCart=()=>{
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static" classes={{colorPrimary:classes.appBarColor}}  >
+      <AppBar position="fixed" classes={{colorPrimary:classes.appBarColor}}  >
         <Toolbar>
           <IconButton
             edge="start"
@@ -242,10 +249,10 @@ const handleClickForCart=()=>{
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 Items in Carts" color="inherit"
+            <IconButton aria-label={`show ${props.userData.booksInCart} Items in Carts`} color="inherit"
             onClick={handleClickForCart}
             >
-              <Badge badgeContent={booksInCart} color="secondary">
+              <Badge badgeContent={booksInCart} color="secondary" key={props.userData.booksInCart}>
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>

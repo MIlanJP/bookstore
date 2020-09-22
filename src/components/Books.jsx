@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import firebase from "../utils/firebase.utils";
+import { v4 as uuidv4 } from 'uuid';
 import { CircularProgress } from "@material-ui/core";
+import { fireStore } from "../utils/firebase.utils";
 import { makeStyles } from "@material-ui/styles";
 import ItemCard from "./ItemCard";
 import Pagination from "@material-ui/lab/Pagination";
@@ -11,6 +13,8 @@ const useStyle = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     marginBottom: "30px",
+    marginTop: "50px",
+
     // color:" rgb(143,43,47)",
     // "&.paginationColor":{
     //     "&.selectedColor":{
@@ -18,10 +22,16 @@ const useStyle = makeStyles((theme) => ({
     //     }
     // }
   },
+  paginationRoot: {
+    "&.MuiPaginationItem-textPrimary.Mui-selected": {
+      color: "white",
+      background: "green",
+    },
+  },
 }));
+
 function Books(props) {
   const classes = useStyle();
-
   const [listOfBooks, setListOfBooks] = useState([]);
   const [page, setPage] = useState(1);
   const [maxpage, setMaxPage] = useState();
@@ -35,45 +45,65 @@ function Books(props) {
   const [from, setFrom] = useState(0);
   const [reminder, setReminder] = useState();
   const [to, setTo] = useState(8);
+
+  const addBooksToCart = (id) => {
+    let list = props.userData.itemsList;
+    console.log(list);
+    let restoreUserData = props.userData;
+    let cartItems = parseInt(props.userData.booksInCart) + 1;
+    list.push(id);
+    restoreUserData.itemsList = [...list];
+
+    console.log(restoreUserData);
+    const userRef = fireStore.doc(`users/${props.userData.id}`);
+    userRef.get().then(async (snapShot) => {
+      try {
+        await userRef.update({
+          booksInCart: cartItems.toString(),
+          itemsList: list,
+        });
+        props.setUserData(restoreUserData);
+      } catch (err) {}
+    });
+  };
+
+  const getListOfBooks = () => {
+    if (typeof props.listOfBooks === "undefined") return;
+    console.log(props.listOfBooks);
+    setListOfBooks(props.listOfBooks);
+
+    const checkLength = Math.floor(props.listOfBooks.length / cardsLimit);
+    const remind = props.listOfBooks.length % cardsLimit;
+    if (remind !== 0) {
+      setLastPageSize(remind);
+      setMaxPage(checkLength + 1);
+    } else {
+      setLastPageSize(cardsLimit);
+      setMaxPage(checkLength);
+    }
+  };
+
   useEffect(() => {
-    const ref = firebase.database().ref();
+    return getListOfBooks();
+  }, [props]);
 
-    ref.on(
-      "value",
-      function (snapshot) {
-        setListOfBooks(snapshot.val().list);
-        console.log(snapshot.val().list[1]);
-        const checkLength = Math.floor(snapshot.val().list.length / cardsLimit);
-        const remind = snapshot.val().list.length % cardsLimit;
-        //    console.log(listOfBooks[1])
-        if (remind !== 0) {
-          setLastPageSize(remind);
-          setMaxPage(checkLength + 1);
-        } else {
-          setLastPageSize(cardsLimit);
-          setMaxPage(checkLength);
-        }
-      },
-      function (error) {
-        console.log("Error: " + error.code);
-      }
-    );
-  }, []);
-
-  useEffect(()=>{
-            const items= listOfBooks.filter(data=>data.author.toLowerCase().includes(props.searchContent.toLowerCase())|| data.title.toLowerCase().includes(props.searchContent.toLowerCase())).length
-            const checkLength = Math.floor(items / cardsLimit);
-            const rem = items% cardsLimit;
-            //    console.log(listOfBooks[1])
-            if (rem !== 0) {
-              setLastPageSize(rem);
-              setMaxPage(checkLength + 1);
-            } else {
-              setLastPageSize(cardsLimit);
-              setMaxPage(checkLength);
-            }
-
-  })
+  useEffect(() => {
+    const items = listOfBooks.filter(
+      (data) =>
+        data.author.toLowerCase().includes(props.searchContent.toLowerCase()) ||
+        data.title.toLowerCase().includes(props.searchContent.toLowerCase())
+    ).length;
+    const checkLength = Math.floor(items / cardsLimit);
+    const rem = items % cardsLimit;
+    //    console.log(listOfBooks[1])
+    if (rem !== 0) {
+      setLastPageSize(rem);
+      setMaxPage(checkLength + 1);
+    } else {
+      setLastPageSize(cardsLimit);
+      setMaxPage(checkLength);
+    }
+  });
 
   const handleChangeForPagination = (number) => {
     setPage(number);
@@ -105,12 +135,25 @@ function Books(props) {
                 .includes(props.searchContent.toLowerCase())
           )
           .slice(from, to)
-          .map((book, index) => {
-
+          .map((book) => {
             return (
-              <div className={styles.bookColumn}>
+              <div className={styles.bookColumn} key={uuidv4()}>
                 {" "}
-                <ItemCard book={book} />
+                <ItemCard
+                  book={book}
+                  showAddedButton={props.userData.itemsList.includes(book.id)}
+                  userData={props.userData}
+                 setUserData={props.setUserData}
+                 listOfBooks={props.listOfBooks}
+                 setListOfBooks={props.setListOfBooks}
+                  list={
+                    typeof props.userData.itemsList !== "undefined" &&
+                    typeof props.userData !== "undefined"
+                      ? props.userData
+                      : null
+                  }
+                  addBooksToCart={addBooksToCart}
+                />
               </div>
             );
           })}
@@ -122,6 +165,7 @@ function Books(props) {
           classes={{
             page: classes.paginationColor,
             selected: classes.selectedColor,
+            root: classes.paginationRoot,
           }}
           onChange={(e) => {
             if (
