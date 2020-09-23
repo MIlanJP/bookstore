@@ -34,6 +34,17 @@ const reducer=(state=initialState ,action)=>{
                 itemsInCart:[...action.payload]
             }
         }
+        case actions.UPDATE_BOOKS_QUANTITY_IN_CART:{
+            return{
+                ...state,
+                itemsInCart:state.itemsInCart.map(item=>{
+                    if(item.id===action.payload.id){
+                        item.quantity=action.payload.number
+                    }
+                    return item
+                })
+            }
+        }
         default: return state;
     }
 }

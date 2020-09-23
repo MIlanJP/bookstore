@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
     display: "none",
     [theme.breakpoints.up("sm")]: {
       display: "block",
+      cursor:"pointer",
     },
   },
   search: {
@@ -222,12 +223,23 @@ const handleClickForCart=()=>{
           <IconButton
             edge="start"
             className={classes.bookIcon}
+            onClick={()=>{
+              if(window.location.pathname!=='/profile'){
+                history.push('/profile')
+              }
+            }}
             color="inherit"
             aria-label="open drawer"
           >
             <LocalLibrarySharpIcon className={classes.book}  />
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
+          <Typography className={classes.title} variant="h6" noWrap
+                      onClick={()=>{
+                        if(window.location.pathname!=='/profile'){
+                          history.push('/profile')
+                        }
+                      }}
+          >
             Bookstore
           </Typography>
           <div className={classes.search}>

@@ -5,9 +5,7 @@ import red from '@material-ui/core/colors/red';
 const fontForBookName="'Lato'"
 const theme = createMuiTheme({
   palette: {
-    primary: {
-        main:red[500]
-    },
+
     secondary: {
       main: yellow[500],
     },
@@ -51,6 +49,7 @@ const theme = createMuiTheme({
       Latofont:{
         fontFamily: fontForBookName,
         fontWeight: 700,
+        fontSize:18,
       } ,     
       placeOrder:{
         fontFamily: fontForBookName,

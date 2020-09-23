@@ -2,7 +2,7 @@ import { Button, Card, CardMedia } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import {addBookToCart} from '../redux'
 import _ from "lodash";
-import {useDispatch} from 'react-redux'
+import {useDispatch,useSelector} from 'react-redux'
 import {updateCartQuantity} from '../redux'
 import {useHistory} from 'react-router'
 import React, { useState, useEffect } from "react";
@@ -10,6 +10,8 @@ import {fireStore} from '../utils/firebase.utils'
 function ItemCard(props) {
 const [displayAddedButton,setDisplayAddedButton]=useState(_.some( props.userData.itemsList, props.book))
 const history = useHistory();
+const items = useSelector((state) => state.cardquantity.items);
+
   const useStyle = makeStyles((theme) => ({
     mainLayout: {
       // background:'black',
@@ -146,22 +148,24 @@ useEffect(()=>{
 
                let usersData=props.userData
                let lists=props.userData.itemsList
-               let booksInCart=parseInt(props.userData.booksInCart)+1;
-               lists.push(props.book)
+              //  let booksInCart=parseInt(props.userData.booksInCart)+1;
+               let book=props.book;
+               book.quantity=1;
+               lists.push(book)
                usersData.itemsList=[...lists]
-               usersData.booksInCart=booksInCart.toString()
+               usersData.booksInCart=parseInt(items)+1
                console.log(props.userData)
                const userRef = fireStore.doc(`users/${props.userData.id}`);
                userRef.get().then(async (snapShot) => {
                  try {
                    await userRef.update({
-                     booksInCart: booksInCart.toString(),
+                     booksInCart: parseInt(items)+1,
                      itemsList: lists,
                    });
                    props.setUserData(usersData);
                    dispatch(addBookToCart(props.book))
                setDisplayAddedButton(true)
-               dispatch(updateCartQuantity(booksInCart))
+               dispatch(updateCartQuantity(parseInt(items)+1))
 
                  } catch (err) {}
           

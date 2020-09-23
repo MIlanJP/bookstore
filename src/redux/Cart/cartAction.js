@@ -25,3 +25,10 @@ export function setBookInCart(books){
         payload:books
     }
 }
+
+export function setBookQuantityInCart(id,number){
+    return{ 
+        type:actions.UPDATE_BOOKS_QUANTITY_IN_CART,
+        payload:{id,number}
+    }
+}
