@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/styles";
 import RemoveIcon from "@material-ui/icons/Remove";
+import ClearIcon from '@material-ui/icons/Clear';
 import { fireStore } from "../utils/firebase.utils";
 import { updateCartQuantity, removeBookFromCart ,setBookQuantityInCart} from "../redux";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +22,7 @@ function Cart(props) {
     displayCustomerDetailsColumn,
     setDisplayCustomerDetailsColumn,
   ] = useState(false);
+  const[displayOrderSummaryColumn, setDisplayOrderSummaryColumn]= useState(false)
   const useStyle = makeStyles((theme) => ({
     mainLayout: {
       position: "relative",
@@ -144,7 +146,7 @@ function Cart(props) {
       top: "-5px",
     },
     customerDetails: {
-      padding: "5%",
+      padding: "5% 5% 0% 5%",
     },
     customerDetails1: {
       width: "60vw",
@@ -155,11 +157,11 @@ function Cart(props) {
       // paddingTop: "28px",
       marginBottom: "50px",
       paddingRight: "10px",
-      marginLeft: "9%",
+      marginLeft: "10%",
       transition: ".5s",
       boxShadow: "0 0 3px 0 rgba(0, 0, 0, 0.64)",
       ...theme.typography.Latofont,
-      position: "absolute",
+      position: "relative",
       // marginLeft: "10px",
     },
     customerDetailsLabel: {
@@ -226,6 +228,36 @@ function Cart(props) {
     },
     radioButton:{
         margin:"10px 0 10px 0",
+    },
+    orderSummarySection: {
+        padding: "0 0 0 5%",
+    },orderSummarySection1:{
+        width: "60vw",
+        //   minWidth: "450px",
+          height: displayOrderSummaryColumn &&  noOfItemsInCart>0 &&  displayCustomerDetailsColumn ? "auto" : "70px",
+          paddingLeft: "34px",
+          textAlign: "left",
+          // paddingTop: "28px",
+          marginBottom: "50px",
+          paddingRight: "10px",
+          marginLeft: "9%",
+          transition: ".5s",
+          boxShadow: "0 0 3px 0 rgba(0, 0, 0, 0.64)",
+          ...theme.typography.Latofont,
+          position: "absolute",
+          // marginLeft: "10px",
+    },
+    orderSummaryLabel:{
+        marginTop: "20px",
+    },
+    bookQuantity:{
+        position: "relative",
+        top: "17px",
+        left: "22px",
+    },
+    bookQuantityNumber:{
+        position: "relative",
+        top: "-5px",
     },
   }));
 
@@ -315,6 +347,7 @@ function Cart(props) {
                     </div>
                   );
                 })}
+                
               <Button
                 className={classes.placeOrderButton}
                 onClick={() => {
@@ -423,7 +456,7 @@ function Cart(props) {
           {noOfItemsInCart>0 && displayCustomerDetailsColumn?  <Button
               className={classes.continueButton}
               onClick={() => {
-                setDisplayCustomerDetailsColumn(!displayCustomerDetailsColumn);
+                setDisplayOrderSummaryColumn(!displayOrderSummaryColumn);
               }}
             >
               CONTINUE
@@ -431,9 +464,42 @@ function Cart(props) {
           </div>
         </Card>
       </div>
-      <div>
-          <Card>
+      <div className={classes.orderSummarySection} >
+          <Card className={classes.orderSummarySection1}  >
+              <div className={classes.orderSummaryLabel}>
               Order Summary
+
+              </div>
+              <div className={classes.bookContainer} >
+                  
+              {itemsToCart.map(book =>{
+                  return  <div className={classes.bookSection}>
+                  <img
+                    className={classes.imageOfBook}
+                    src={book.image}
+                    alt={book.title}
+                  />
+                  <div className={classes.bookDetailsSection}>
+                    <div className={classes.bookTitle}>{book.title}</div>
+                    <div className={classes.authorName}>{book.author}</div>
+              <div className={classes.bookQuantity}><ClearIcon/> <span className={classes.bookQuantityNumber} >{book.quantity}</span></div>
+                    <div className={classes.bookPrice}>
+                      Rs. {parseInt(book.quantity)*parseInt(book.price)}
+                    </div>
+                    </div>
+                    </div>
+                    }
+                   )
+                }
+                 </div>
+                 {displayOrderSummaryColumn && noOfItemsInCart>0 && displayCustomerDetailsColumn?  <Button
+              className={classes.continueButton}
+              onClick={() => {
+                setDisplayOrderSummaryColumn(!displayOrderSummaryColumn);
+              }}
+            >
+              CHECKOUT
+            </Button>:null}
           </Card>
       </div>
     </>
