@@ -42,7 +42,11 @@ function Profile(props) {
           />
         )}
       />
-      <Route exact path="/profile/cart" render={() => <Cart />} />
+      <Route exact path="/profile/cart" render={() => <Cart 
+         listOfBooks={props.listOfBooks}
+         setUserData={props.setUserData}
+         userData={props.userData}
+      />} />
 
       {/* </Switch> */}
       {/* <ItemCard/>  */}

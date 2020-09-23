@@ -48,6 +48,14 @@ const theme = createMuiTheme({
         fontSize: 13.5,
         textTransform: "none", 
       },
+      Latofont:{
+        fontFamily: fontForBookName,
+        fontWeight: 700,
+      } ,     
+      placeOrder:{
+        fontFamily: fontForBookName,
+        fontWeight: 200,
+      }
 
 },
 });

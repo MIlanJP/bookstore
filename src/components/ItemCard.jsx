@@ -1,5 +1,6 @@
 import { Button, Card, CardMedia } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
+import {addBookToCart} from '../redux'
 import _ from "lodash";
 import {useDispatch} from 'react-redux'
 import {updateCartQuantity} from '../redux'
@@ -7,7 +8,7 @@ import {useHistory} from 'react-router'
 import React, { useState, useEffect } from "react";
 import {fireStore} from '../utils/firebase.utils'
 function ItemCard(props) {
-const [displayAddedButton,setDisplayAddedButton]=useState(props.userData.itemsList.includes( props.book.id))
+const [displayAddedButton,setDisplayAddedButton]=useState(_.some( props.userData.itemsList, props.book))
 const history = useHistory();
   const useStyle = makeStyles((theme) => ({
     mainLayout: {
@@ -111,8 +112,9 @@ const history = useHistory();
   //       console.log(props)
   //   }
 useEffect(()=>{
-    setDisplayAddedButton(props.userData.itemsList.includes( props.book.id))
-    console.log("Frn crd")
+    // setDisplayAddedButton(props.userData.itemsList.includes( props.book.id))
+    // console.log("Frn crd")
+    // console.log(_.some( props.userData.itemsList, props.book))
 })
   return (
     <Card className={classes.mainLayout}>
@@ -145,7 +147,7 @@ useEffect(()=>{
                let usersData=props.userData
                let lists=props.userData.itemsList
                let booksInCart=parseInt(props.userData.booksInCart)+1;
-               lists.push(props.book.id.toString())
+               lists.push(props.book)
                usersData.itemsList=[...lists]
                usersData.booksInCart=booksInCart.toString()
                console.log(props.userData)
@@ -157,6 +159,7 @@ useEffect(()=>{
                      itemsList: lists,
                    });
                    props.setUserData(usersData);
+                   dispatch(addBookToCart(props.book))
                setDisplayAddedButton(true)
                dispatch(updateCartQuantity(booksInCart))
 

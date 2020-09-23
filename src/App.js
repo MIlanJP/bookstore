@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
+import {useDispatch} from 'react-redux'
+import {setBookInCart} from './redux'
 import {updateCartQuantity} from './redux'
 import {CartItemsProvider} from './components/cartItemsContext'
 import firebase, {
@@ -10,7 +12,6 @@ import firebase, {
 } from "./utils/firebase.utils";
 import { BrowserRouter as Router, Route } from "react-router";
 import { useHistory } from "react-router";
-import {useDispatch} from 'react-redux'
 import Login from "./components/starterpage";
 import Profile from "./components/profile";
 function App() {
@@ -39,12 +40,15 @@ function App() {
       setUser(userDoc.displayName);
       console.log(userDoc);
       if (userDoc.displayName !== "") {
+       if( window.location.pathname==='/'){
         history.push("/profile");
+       }
       }
       if (user !== "" && id !== null) {
         const userRef = fireStore.doc(`users/${userDoc.uid}`);
         await userRef.get().then(async (snapShot) => {
           setUserData(snapShot.data());
+          dispatch(setBookInCart(snapShot.data().itemsList))
           setItemsInCart(snapShot.data().booksInCart)
           dispatch(updateCartQuantity(snapShot.data().booksInCart))
           if (!snapShot.exists) {
