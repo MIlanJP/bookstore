@@ -1,6 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/styles";
+import {useHistory} from 'react-router'
 import greetingIcon from "../Assets/Group 4132.svg";
+import { Button } from "@material-ui/core";
 function Ordersucessfullypage() {
   const useStyle = makeStyles((theme) => ({
     mainLayout: {
@@ -63,11 +65,21 @@ function Ordersucessfullypage() {
         textAlign:'left',
         padding:"0 5px",
     },
-
+    continueButton: {
+        ...theme.typography.placeOrder,
+        background: "rgb(51,113,181)",
+        marginTop:"15px",
+        "&:hover": {
+          background: "rgb(51,113,181)",
+        },
+        width: "171px",
+        marginLeft: "auto",
+        color: "white",
+      },
 
   }));
   const classes = useStyle();
-
+const history = useHistory();
   return (
     <div className={classes.mainLayout}>
       <img
@@ -101,6 +113,14 @@ function Ordersucessfullypage() {
           </div>
         </div>
       </div>
+      <Button
+              className={classes.continueButton}
+              onClick={() => {
+                history.push("/profile");
+              }}
+            >
+              CONTINUE SHOPPING
+            </Button>
     </div>
   );
 }

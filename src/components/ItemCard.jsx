@@ -8,7 +8,8 @@ import {useHistory} from 'react-router'
 import React, { useState, useEffect } from "react";
 import {fireStore} from '../utils/firebase.utils'
 function ItemCard(props) {
-const [displayAddedButton,setDisplayAddedButton]=useState(_.some( props.userData.itemsList, props.book))
+const [displayAddedButton,setDisplayAddedButton]=useState(_.some( props.userData.itemsList, ["id",props.book.id]))
+console.log(_.some( props.userData.itemsList, props.book.id))
 const history = useHistory();
 const items = useSelector((state) => state.cardquantity.items);
 
@@ -100,6 +101,7 @@ const items = useSelector((state) => state.cardquantity.items);
       boxShadow: " 0px 0px  3px 0px black",
       padding: "3px 10px 3px 10px",
       width: "90%",
+      color:'white',
       position: "relative",
       top: "-20px",
       background: "rgb(51,113,181)",
