@@ -2,6 +2,7 @@ import React, { useEffect, useState,useRef } from "react";
 import { useHistory, Route } from "react-router";
 import Books from "./Books";
 import Cart from "./Cart";
+import Ordersucessfullypage from './ordersucesspage'
 import Header from "./header";
 
 function Profile(props) {
@@ -43,6 +44,12 @@ function Profile(props) {
         )}
       />
       <Route exact path="/profile/cart" render={() => <Cart 
+         listOfBooks={props.listOfBooks}
+         setUserData={props.setUserData}
+         userData={props.userData}
+      />} />
+
+<Route exact path="/profile/ordersuccesspage" render={() => <Ordersucessfullypage 
          listOfBooks={props.listOfBooks}
          setUserData={props.setUserData}
          userData={props.userData}

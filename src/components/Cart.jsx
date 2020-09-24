@@ -6,6 +6,7 @@ import { fireStore } from "../utils/firebase.utils";
 import { updateCartQuantity, removeBookFromCart ,setBookQuantityInCart} from "../redux";
 import { useDispatch, useSelector } from "react-redux";
 import AddIcon from "@material-ui/icons/Add";
+import {useHistory} from 'react-router'
 import {
   Button,
   Card,
@@ -16,8 +17,10 @@ import {
 } from "@material-ui/core";
 import _ from "lodash";
 function Cart(props) {
+  const history = useHistory();
   const itemsToCart = useSelector((state) => state.cardquantity.itemsInCart);
   const noOfItemsInCart = useSelector((state) => state.cardquantity.items);
+  const [totalAmount ,setTotalAmount] = useState(0);
   const [
     displayCustomerDetailsColumn,
     setDisplayCustomerDetailsColumn,
@@ -259,6 +262,10 @@ function Cart(props) {
         position: "relative",
         top: "-5px",
     },
+    totalAmount:{
+      ...theme.typography.Latofont,
+margin:'10px 0 30px 0',
+    },
   }));
 
   const classes = useStyle();
@@ -277,8 +284,13 @@ function Cart(props) {
             <div className={classes.bookContainer}>
               {itemsToCart
                 .map((book) => {
+                  
                   return (
-                    <div className={classes.bookSection}>
+                    <div className={classes.bookSection}
+                    onLoad={()=>{
+                      setTotalAmount(parseInt(totalAmount)+(Number(book.price)*Number(book.quantity)))
+                    }}
+                    >
                       <img
                         className={classes.imageOfBook}
                         src={book.image}
@@ -295,6 +307,7 @@ function Cart(props) {
                             className={classes.reduceButton}
                             onClick={(e) => {
                                 if(book.quantity>1){
+                                  setTotalAmount(parseInt(totalAmount)-parseInt(book.price))
                                     dispatch(setBookQuantityInCart(book.id,parseInt(book.quantity)-1))
                                 }
                
@@ -306,6 +319,7 @@ function Cart(props) {
                             onClick={(e) => {
                       
                                 if(book.quantity<9){
+                                  setTotalAmount(parseInt(totalAmount)+parseInt(book.price))
                                   dispatch(setBookQuantityInCart(book.id,parseInt(book.quantity)+1))
                                 }
 
@@ -332,10 +346,16 @@ function Cart(props) {
                                     itemsList: itemsList,
                                   });
                                   props.setUserData(userData);
+                                  let amount=Number(book.price)*Number(book.quantity)
+                                  console.log(amount)
+                      setTotalAmount(totalAmount-amount)
+
                                   dispatch(removeBookFromCart(book));
                                   dispatch(
                                     updateCartQuantity(itemsList.length)
+                                    
                                   );
+                                  console.log(book.price,book.quantity)
                                 } catch (err) {}
                               });
                             }}
@@ -491,11 +511,14 @@ function Cart(props) {
                     }
                    )
                 }
+                {/* <div className={classes.totalAmount}>Total Amount = { totalAmount}</div> */}
                  </div>
                  {displayOrderSummaryColumn && noOfItemsInCart>0 && displayCustomerDetailsColumn?  <Button
               className={classes.continueButton}
               onClick={() => {
                 setDisplayOrderSummaryColumn(!displayOrderSummaryColumn);
+              history.push("/profile/ordersuccesspage")
+
               }}
             >
               CHECKOUT

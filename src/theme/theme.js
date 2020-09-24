@@ -54,8 +54,26 @@ const theme = createMuiTheme({
       placeOrder:{
         fontFamily: fontForBookName,
         fontWeight: 200,
-      }
+      },
+      orderSucessMessage:{
+        fontFamily: fontForBookName,
+        fontWeight: 700,
+        fontSize:20,
+      },
+      lastPage:{
+        fontFamily: fontForBookName,
+        fontSize:18,
+      },
 
+      companyDetailsHeading:{
+        fontFamily: fontForBookName,
+        fontSize:13,
+        fontWeight:700,
+      },
+      companyDetailsContent:{
+        fontFamily: fontForBookName,
+        fontSize:13,
+      },
 },
 });
 
