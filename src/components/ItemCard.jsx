@@ -9,7 +9,6 @@ import React, { useState, useEffect } from "react";
 import {fireStore} from '../utils/firebase.utils'
 function ItemCard(props) {
 const [displayAddedButton,setDisplayAddedButton]=useState(_.some( props.userData.itemsList, ["id",props.book.id]))
-console.log(_.some( props.userData.itemsList, props.book.id))
 const history = useHistory();
 const items = useSelector((state) => state.cardquantity.items);
 
@@ -18,11 +17,12 @@ const items = useSelector((state) => state.cardquantity.items);
       // background:'black',
       border: "black",
       height: "315px",
-      width: "235px",
+      width: "220px",
+      marginLeft:'10px',
     },
     bookImage: {
       height: "171px",
-      width: "233px",
+      width: "220px",
       paddingBottom: "2px",
       background: "rgb(245,245,245)",
     },
@@ -94,7 +94,7 @@ const items = useSelector((state) => state.cardquantity.items);
       alignItems: "center",
       marginTop: "70px",
       fontWeight: "600",
-      marginLeft: "27px",
+      marginLeft: "17px",
     },
     addedTOCartButton: {
       ...theme.typography.wishListButton,

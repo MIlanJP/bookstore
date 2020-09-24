@@ -33,6 +33,15 @@ function Cart(props) {
   const [displayOrderSummaryColumn, setDisplayOrderSummaryColumn] = useState(
     false
   );
+const [name,setName]=useState('')
+const [phoneNumber,setPhoneNumber]=useState('')
+const [address,setAddress]=useState('')
+const [city,setCity]=useState('')
+const [locality,setLocality]=useState('')
+const [pincode,setPincode]=useState('')
+const [deliverLocationType,setDeliverLocationType]=useState('')
+
+
   const useStyle = makeStyles((theme) => ({
     mainLayout: {
       position: "relative",
@@ -417,6 +426,11 @@ function Cart(props) {
                 label="Name"
                 variant="outlined"
                 size="small"
+                value={name}
+                error={!(/^[A-Z]+[a-zA-Z]{4}[a-z1-9]*$/.test(name) || name==='' )}
+                onChange={(e)=>{
+                  setName(e.currentTarget.value)
+                }}
               />
               <TextField
                 className={classes.numberSection}
@@ -425,6 +439,11 @@ function Cart(props) {
                 variant="outlined"
                 type="number"
                 size="small"
+                value={phoneNumber}
+                error={!( /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(phoneNumber) || phoneNumber==''  )}
+                onChange={(e)=>{
+                  setPhoneNumber(e.currentTarget.value)
+                }}
               />
             </div>
             <div className={classes.customerDetailsSecondSection}>
@@ -434,6 +453,12 @@ function Cart(props) {
                 label="Pincode"
                 variant="outlined"
                 size="small"
+                error={!(pincode>99999 && pincode<1000000 || pincode=='')}
+                type="number"
+                value={pincode}
+                onChange={(e)=>{
+                  setPincode(e.currentTarget.value)
+                }}
               />
               <TextField
                 className={classes.localitySection}
@@ -441,6 +466,11 @@ function Cart(props) {
                 label="Locality"
                 variant="outlined"
                 size="small"
+                value={locality}
+                error={!(locality.toString().trim().replace(" ", "").length>3 || locality==='')}
+                onChange={(e)=>{
+                  setLocality(e.currentTarget.value)
+                }}
               />
             </div>
             <div className={classes.customerDetailsThirdSection}>
@@ -450,8 +480,13 @@ function Cart(props) {
                 label="Address"
                 variant="outlined"
                 multiline={true}
+                error={!(address.toString().trim().replace(" ", "").length>30 || address==='')}
                 rows={3}
                 fullWidth={true}
+                value={address}
+                onChange={(e)=>{
+                  setAddress(e.currentTarget.value)
+                }}
               />
             </div>
             <div className={classes.customerDetailsFourthSection}>
@@ -459,8 +494,13 @@ function Cart(props) {
                 className={classes.citySection}
                 id="outlined-basic"
                 label="City"
+                error={!(city.toString().trim().replace(" ", "").length>3 || city==='')}
                 variant="outlined"
                 size="small"
+                value={city}
+                onChange={(e)=>{
+                  setCity(e.currentTarget.value)
+                }}
               />
               <TextField
                 className={classes.landmarkSection}
@@ -481,18 +521,27 @@ function Cart(props) {
                   value="Home"
                   control={<Radio color="primary" />}
                   label="Home"
+                  onClick={(e)=>{
+                    setDeliverLocationType("Home")
+                  }}
                   labelPlacement="end"
                 />
                 <FormControlLabel
                   value="Work"
                   control={<Radio color="primary" />}
                   label="Work   "
+                  onClick={(e)=>{
+                    setDeliverLocationType("Work")
+                  }}
                   labelPlacement="end"
                 />
                 <FormControlLabel
                   value="Other"
                   control={<Radio color="primary" />}
                   label="Other"
+                  onClick={(e)=>{
+                    setDeliverLocationType("Work")
+                  }}
                   labelPlacement="end"
                 />
               </RadioGroup>
@@ -501,7 +550,15 @@ function Cart(props) {
               <Button
                 className={classes.continueButton}
                 onClick={() => {
-                  setDisplayOrderSummaryColumn(!displayOrderSummaryColumn);
+                  if(deliverLocationType!=='' && (/^[A-Z]+[a-zA-Z]{4}[a-z1-9]*$/.test(name))
+                   && ( /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(phoneNumber))
+                    && (pincode>99999 && pincode<1000000) && 
+                    (locality.toString().trim().replace(" ", "").length>3) &&
+                    (address.toString().trim().replace(" ", "").length>30) && 
+                    (city.toString().trim().replace(" ", "").length>3)
+                    ){
+                    setDisplayOrderSummaryColumn(!displayOrderSummaryColumn);
+                  }
                 }}
               >
                 CONTINUE
