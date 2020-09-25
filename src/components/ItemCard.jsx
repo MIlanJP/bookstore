@@ -112,14 +112,8 @@ const items = useSelector((state) => state.cardquantity.items);
   }));
   const dispatch= useDispatch()
   const classes = useStyle();
-  //   if(_.includes(props.list,props.book.id)){
-  //       console.log(props)
-  //   }
-useEffect(()=>{
-    // setDisplayAddedButton(props.userData.itemsList.includes( props.book.id))
-    // console.log("Frn crd")
-    // console.log(_.some( props.userData.itemsList, props.book))
-})
+
+
   return (
     <Card className={classes.mainLayout}>
       <div className={classes.bookImage}>
@@ -156,7 +150,6 @@ useEffect(()=>{
                lists.push(book)
                usersData.itemsList=[...lists]
                usersData.booksInCart=parseInt(items)+1
-               console.log(props.userData)
                const userRef = fireStore.doc(`users/${props.userData.id}`);
                userRef.get().then(async (snapShot) => {
                  try {

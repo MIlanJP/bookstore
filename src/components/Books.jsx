@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import _ from "lodash";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import { CircularProgress, NativeSelect } from "@material-ui/core";
 import { fireStore } from "../utils/firebase.utils";
 import { makeStyles } from "@material-ui/styles";
@@ -28,28 +28,29 @@ const useStyle = makeStyles((theme) => ({
       background: "green",
     },
   },
-  selectEmpty:{
-    position:"relative",
-    top:"40px",
+  selectEmpty: {
+    position: "relative",
+    top: "40px",
     marginLeft: "auto",
     display: "flex",
     width: "168px",
     marginRight: "15%",
   },
-  rootOfNativeSelect:{
-    border:'ridge',
-    padding:"5px 10px",
+  rootOfNativeSelect: {
+    border: "ridge",
+    padding: "5px 10px",
   },
-  booksLength:{
+  booksLength: {
     ...theme.typography.bookLength,
-    position:'relative',
+    position: "relative",
     top: "68px",
     marginRight: "auto",
     display: "flex",
     marginLeft: "18%",
-  },booksNumber:{
+  },
+  booksNumber: {
     ...theme.typography.authorName,
-    marginLeft:"10px",
+    marginLeft: "10px",
     color: "#9D9D9D",
     position: "relative",
     top: "8px",
@@ -60,10 +61,10 @@ function Books(props) {
   const classes = useStyle();
   const [listOfBooks, setListOfBooks] = useState([]);
   const [books, resetBooks] = useState([]);
-  const[booksLength,setBooksLength]=useState(0)
+  const [booksLength, setBooksLength] = useState(0);
   const [page, setPage] = useState(1);
   const [maxpage, setMaxPage] = useState();
-const [sortByRelevance,setSortByRelevance]=useState("Sort by relevance");
+  const [sortByRelevance, setSortByRelevance] = useState("Sort by relevance");
   const [lastPageSize, setLastPageSize] = useState();
   const [cardsLimit, setCardsLimit] = useState(8);
   const decrementInnerHtml =
@@ -71,18 +72,15 @@ const [sortByRelevance,setSortByRelevance]=useState("Sort by relevance");
   const incrementInnerHtml =
     '<path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>';
   const [from, setFrom] = useState(0);
-  const [reminder, setReminder] = useState();
   const [to, setTo] = useState(8);
 
   const addBooksToCart = (id) => {
     let list = props.userData.itemsList;
-    console.log(list);
     let restoreUserData = props.userData;
     let cartItems = parseInt(props.userData.booksInCart) + 1;
     list.push(id);
     restoreUserData.itemsList = [...list];
 
-    console.log(restoreUserData);
     const userRef = fireStore.doc(`users/${props.userData.id}`);
     userRef.get().then(async (snapShot) => {
       try {
@@ -97,10 +95,9 @@ const [sortByRelevance,setSortByRelevance]=useState("Sort by relevance");
 
   const getListOfBooks = () => {
     if (typeof props.listOfBooks === "undefined") return;
-    console.log(props.listOfBooks);
     setListOfBooks(props.listOfBooks);
-    resetBooks(props.listOfBooks)
-    setBooksLength(props.listOfBooks.length)
+    resetBooks(props.listOfBooks);
+    setBooksLength(props.listOfBooks.length);
     const checkLength = Math.floor(props.listOfBooks.length / cardsLimit);
     const remind = props.listOfBooks.length % cardsLimit;
     if (remind !== 0) {
@@ -124,7 +121,6 @@ const [sortByRelevance,setSortByRelevance]=useState("Sort by relevance");
     ).length;
     const checkLength = Math.floor(items / cardsLimit);
     const rem = items % cardsLimit;
-    //    console.log(listOfBooks[1])
     if (rem !== 0) {
       setLastPageSize(rem);
       setMaxPage(checkLength + 1);
@@ -146,44 +142,66 @@ const [sortByRelevance,setSortByRelevance]=useState("Sort by relevance");
   };
   return (
     <>
-    <div className={classes.booksLength}  >Books <span className={classes.booksNumber}  >({listOfBooks
-          .filter(
-            (data) =>
-              data.author
-                .toLowerCase()
-                .includes(props.searchContent.toLowerCase()) ||
-              data.title
-                .toLowerCase()
-                .includes(props.searchContent.toLowerCase())
-          ).length} Items)</span></div>
-            <NativeSelect
-          className={classes.selectEmpty}
-          value={sortByRelevance}
-          name=" Sort By Relavance"
-          onChange={(e)=>{
-            console.log(e.currentTarget.value)
-            if(e.currentTarget.value==1){
-              console.log("et")
-              let list=listOfBooks;
-              list= _.sortBy(list,[function(book){return parseInt(book.price)}])
-              console.log(list)
-              setListOfBooks( _.sortBy(listOfBooks,[function(book){return parseInt(book.price)}]))
-            }else if(e.currentTarget.value==2){
-              setListOfBooks(_.reverse( _.sortBy(listOfBooks,[function(book){return parseInt(book.price)}])))
-
-            }else{
-              setListOfBooks(books)
-            }
-            setSortByRelevance()}}
-          variant='standard'
-          classes={{root:classes.rootOfNativeSelect}}
-        >
-          <option value="">
-            Sort By Relavance
-          </option>
-          <option value={1}>Price : Low to High</option>
-          <option value={2}>Price : High to Low</option>
-        </NativeSelect>
+      <div className={classes.booksLength}>
+        Books{" "}
+        <span className={classes.booksNumber} data-testid="itemsNumber">
+          (
+          {
+            listOfBooks.filter(
+              (data) =>
+                data.author
+                  .toLowerCase()
+                  .includes(props.searchContent.toLowerCase()) ||
+                data.title
+                  .toLowerCase()
+                  .includes(props.searchContent.toLowerCase())
+            ).length
+          }{" "}
+          Items)
+        </span>
+      </div>
+      <NativeSelect
+        data-testid="sortByRelevance"
+        className={classes.selectEmpty}
+        value={sortByRelevance}
+        name=" Sort By Relavance"
+        onChange={(e) => {
+          if (e.currentTarget.value == 1) {
+            let list = listOfBooks;
+            list = _.sortBy(list, [
+              function (book) {
+                return parseInt(book.price);
+              },
+            ]);
+            setListOfBooks(
+              _.sortBy(listOfBooks, [
+                function (book) {
+                  return parseInt(book.price);
+                },
+              ])
+            );
+          } else if (e.currentTarget.value == 2) {
+            setListOfBooks(
+              _.reverse(
+                _.sortBy(listOfBooks, [
+                  function (book) {
+                    return parseInt(book.price);
+                  },
+                ])
+              )
+            );
+          } else {
+            setListOfBooks(books);
+          }
+          setSortByRelevance();
+        }}
+        variant="standard"
+        classes={{ root: classes.rootOfNativeSelect }}
+      >
+        <option value="">Sort By Relavance</option>
+        <option value={1}>Price : Low to High</option>
+        <option value={2}>Price : High to Low</option>
+      </NativeSelect>
       <div className={styles.booksContainer}>
         {listOfBooks.length === 0 ? (
           <CircularProgress
@@ -204,15 +222,15 @@ const [sortByRelevance,setSortByRelevance]=useState("Sort by relevance");
           .slice(from, to)
           .map((book) => {
             return (
-              <div className={styles.bookColumn} key={uuidv4()}>
+              <div className={styles.bookColumn} key={uuidv4()} data-testid='numberOfBooksRendered'  >
                 {" "}
                 <ItemCard
                   book={book}
                   showAddedButton={props.userData.itemsList.includes(book.id)}
                   userData={props.userData}
-                 setUserData={props.setUserData}
-                 listOfBooks={props.listOfBooks}
-                 setListOfBooks={props.setListOfBooks}
+                  setUserData={props.setUserData}
+                  listOfBooks={props.listOfBooks}
+                  setListOfBooks={props.setListOfBooks}
                   list={
                     typeof props.userData.itemsList !== "undefined" &&
                     typeof props.userData !== "undefined"
@@ -241,13 +259,11 @@ const [sortByRelevance,setSortByRelevance]=useState("Sort by relevance");
               e.currentTarget.firstElementChild.innerHTML !== incrementInnerHtml
             ) {
               handleChangeForPagination(e.currentTarget.innerHTML[0]);
-              console.log(e.currentTarget.firstElementChild.innerHTML);
             } else if (
               e.currentTarget.firstElementChild.innerHTML === decrementInnerHtml
             ) {
               handleChangeForPagination(page - 1);
             } else {
-              console.log(page + 1);
               handleChangeForPagination(parseInt(page) + 1);
             }
           }}

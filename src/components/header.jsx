@@ -121,7 +121,6 @@ const booksInCart=useSelector(state=>state.cardquantity.items)
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-// console.log(props)
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };

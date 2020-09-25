@@ -1,5 +1,5 @@
 import React, { useEffect, useState,useRef } from "react";
-import { useHistory, Route } from "react-router";
+import { useHistory, Route } from "react-router-dom";
 import Books from "./Books";
 import Cart from "./Cart";
 import Ordersucessfullypage from './ordersucesspage'
@@ -7,18 +7,16 @@ import Header from "./header";
 
 function Profile(props) {
   const [searchContent, setSearchContent] = useState("");
-  let badge=useRef(null)
   useEffect(() => {
     if (props.user === "" || props.user === null) {
       history.push("/");
     }
-    console.log(badge)
   });
 
 
   const history = useHistory();
   return (
-    <div>
+    <div data-test="profilePage"  >
       <Header
         userData={props.userData}
         searchContent={searchContent}
@@ -34,7 +32,6 @@ function Profile(props) {
         path="/profile"
         component={() => (
           <Books
-          ref={badge}
             searchContent={searchContent}
             userData={props.userData}
             setUserData={props.setUserData}

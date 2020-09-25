@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Books Container matches SnapShot 1`] = `
+<DocumentFragment>
+  <div
+    class="makeStyles-booksLength-17"
+  >
+    Books 
+    <span
+      class="makeStyles-booksNumber-18"
+      data-testid="itemsNumber"
+    >
+      (0 Items)
+    </span>
+  </div>
+  <div
+    class="MuiInputBase-root MuiInput-root MuiInput-underline makeStyles-selectEmpty-15"
+    data-testid="sortByRelevance"
+  >
+    <select
+      class="MuiNativeSelect-root makeStyles-rootOfNativeSelect-16 MuiNativeSelect-select MuiInputBase-input MuiInput-input"
+      name=" Sort By Relavance"
+    >
+      <option
+        value=""
+      >
+        Sort By Relavance
+      </option>
+      <option
+        value="1"
+      >
+        Price : Low to High
+      </option>
+      <option
+        value="2"
+      >
+        Price : High to Low
+      </option>
+    </select>
+    <svg
+      aria-hidden="true"
+      class="MuiSvgIcon-root MuiNativeSelect-icon"
+      focusable="false"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M7 10l5 5 5-5z"
+      />
+    </svg>
+  </div>
+  <div
+    class="booksContainer"
+  >
+    <div
+      class="MuiCircularProgress-root circularProgress MuiCircularProgress-colorSecondary MuiCircularProgress-indeterminate"
+      role="progressbar"
+      style="width: 40px; height: 40px;"
+    >
+      <svg
+        class="MuiCircularProgress-svg"
+        viewBox="22 22 44 44"
+      >
+        <circle
+          class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
+          cx="44"
+          cy="44"
+          fill="none"
+          r="20.2"
+          stroke-width="3.6"
+        />
+      </svg>
+    </div>
+     
+  </div>
+</DocumentFragment>
+`;

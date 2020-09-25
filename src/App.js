@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+
+
 import "./App.css";
 import {useDispatch} from 'react-redux'
 import {setBookInCart} from './redux'
@@ -37,7 +39,6 @@ function App() {
       id = userDoc.uid || null;
       email = userDoc.email || null;
       setUser(userDoc.displayName);
-      console.log(userDoc);
       if (userDoc.displayName !== "") {
        if( window.location.pathname==='/'){
         history.push("/profile");
@@ -72,39 +73,19 @@ function App() {
          
         },
         function (error) {
-          console.log("Error: " + error.code);
         }
         
       );
-      // fireStore.collection(`users/${userDoc.uid}`).set({
-      //   name:userDoc.displayName,
-      //   email:userDoc.email
-      // })
-
-      // await  fireStore.collection(`users`).get().then(snapShot=>{
-      //     const users=[];
-      //     snapShot.forEach(doc=>{
-      //       const data=doc.data()
-      //       users.push(data)
-      //     })
-      //     console.log(users )
-      //   }).catch(err=>{
-      //     console.log(err)
-      //   })
-      // createUserProfileDocument()
+  
     });
-    //  await fireStore.collection(`users`).get().then(snapshot=>{
-    //   console.log(snapshot,id)
-    // })
+
   };
   useEffect(() => {
    return checkAuthStateChange();
   }, userData);
 
   const handleUserDataChange=(data)=>{
-    console.log("from app")
     setUserData(data)
-    console.log(userData)
 
   }
 
