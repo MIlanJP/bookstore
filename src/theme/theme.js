@@ -64,6 +64,10 @@ const theme = createMuiTheme({
         fontFamily: fontForBookName,
         fontSize:18,
       },
+      bookLength:{
+        fontFamily: fontForBookName,
+        fontSize:22,
+      },
 
       companyDetailsHeading:{
         fontFamily: fontForBookName,

@@ -3,7 +3,6 @@ import "./App.css";
 import {useDispatch} from 'react-redux'
 import {setBookInCart} from './redux'
 import {updateCartQuantity} from './redux'
-import {CartItemsProvider} from './components/cartItemsContext'
 import firebase, {
   
   fireStore,
@@ -110,9 +109,7 @@ function App() {
   }
 
   return (
-    <CartItemsProvider
-    value={ItemsInCart}
-    >
+
     <div className="App">
       <Route
         exact
@@ -133,7 +130,6 @@ function App() {
         )}
       />
     </div>
-    </CartItemsProvider>
   );
 }
 

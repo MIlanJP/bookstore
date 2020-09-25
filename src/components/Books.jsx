@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import firebase from "../utils/firebase.utils";
+import _ from "lodash";
 import { v4 as uuidv4 } from 'uuid';
-import { CircularProgress } from "@material-ui/core";
+import { CircularProgress, NativeSelect } from "@material-ui/core";
 import { fireStore } from "../utils/firebase.utils";
 import { makeStyles } from "@material-ui/styles";
 import ItemCard from "./ItemCard";
@@ -28,14 +28,42 @@ const useStyle = makeStyles((theme) => ({
       background: "green",
     },
   },
+  selectEmpty:{
+    position:"relative",
+    top:"40px",
+    marginLeft: "auto",
+    display: "flex",
+    width: "168px",
+    marginRight: "15%",
+  },
+  rootOfNativeSelect:{
+    border:'ridge',
+    padding:"5px 10px",
+  },
+  booksLength:{
+    ...theme.typography.bookLength,
+    position:'relative',
+    top: "68px",
+    marginRight: "auto",
+    display: "flex",
+    marginLeft: "18%",
+  },booksNumber:{
+    ...theme.typography.authorName,
+    marginLeft:"10px",
+    color: "#9D9D9D",
+    position: "relative",
+    top: "8px",
+  },
 }));
 
 function Books(props) {
   const classes = useStyle();
   const [listOfBooks, setListOfBooks] = useState([]);
+  const [books, resetBooks] = useState([]);
+  const[booksLength,setBooksLength]=useState(0)
   const [page, setPage] = useState(1);
   const [maxpage, setMaxPage] = useState();
-
+const [sortByRelevance,setSortByRelevance]=useState("Sort by relevance");
   const [lastPageSize, setLastPageSize] = useState();
   const [cardsLimit, setCardsLimit] = useState(8);
   const decrementInnerHtml =
@@ -71,7 +99,8 @@ function Books(props) {
     if (typeof props.listOfBooks === "undefined") return;
     console.log(props.listOfBooks);
     setListOfBooks(props.listOfBooks);
-
+    resetBooks(props.listOfBooks)
+    setBooksLength(props.listOfBooks.length)
     const checkLength = Math.floor(props.listOfBooks.length / cardsLimit);
     const remind = props.listOfBooks.length % cardsLimit;
     if (remind !== 0) {
@@ -117,6 +146,44 @@ function Books(props) {
   };
   return (
     <>
+    <div className={classes.booksLength}  >Books <span className={classes.booksNumber}  >({listOfBooks
+          .filter(
+            (data) =>
+              data.author
+                .toLowerCase()
+                .includes(props.searchContent.toLowerCase()) ||
+              data.title
+                .toLowerCase()
+                .includes(props.searchContent.toLowerCase())
+          ).length} Items)</span></div>
+            <NativeSelect
+          className={classes.selectEmpty}
+          value={sortByRelevance}
+          name=" Sort By Relavance"
+          onChange={(e)=>{
+            console.log(e.currentTarget.value)
+            if(e.currentTarget.value==1){
+              console.log("et")
+              let list=listOfBooks;
+              list= _.sortBy(list,[function(book){return parseInt(book.price)}])
+              console.log(list)
+              setListOfBooks( _.sortBy(listOfBooks,[function(book){return parseInt(book.price)}]))
+            }else if(e.currentTarget.value==2){
+              setListOfBooks(_.reverse( _.sortBy(listOfBooks,[function(book){return parseInt(book.price)}])))
+
+            }else{
+              setListOfBooks(books)
+            }
+            setSortByRelevance()}}
+          variant='standard'
+          classes={{root:classes.rootOfNativeSelect}}
+        >
+          <option value="">
+            Sort By Relavance
+          </option>
+          <option value={1}>Price : Low to High</option>
+          <option value={2}>Price : High to Low</option>
+        </NativeSelect>
       <div className={styles.booksContainer}>
         {listOfBooks.length === 0 ? (
           <CircularProgress

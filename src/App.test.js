@@ -8,6 +8,7 @@ import Profile from './components/profile'
 configure({adapter:new Adapter()});
 
 
+
 describe("check routes of the main page",()=>{
   test('renders component according to / route', () => {
     const wrapper = mount(<MemoryRouter initialEntries={[ '/' ]}><App /></MemoryRouter>);
@@ -23,7 +24,6 @@ describe("check routes of the main page",()=>{
     console.log(button.debug())
     expect(button).toHaveLength(2)
     wrapper.unmount()
-
   });
   
 

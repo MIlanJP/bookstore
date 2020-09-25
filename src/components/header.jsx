@@ -8,7 +8,6 @@ import Typography from "@material-ui/core/Typography";
 import LocalLibrarySharpIcon from '@material-ui/icons/LocalLibrarySharp';
 import InputBase from "@material-ui/core/InputBase";
 import Badge from "@material-ui/core/Badge";
-import CartItemsContext from './cartItemsContext';
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -113,7 +112,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Header(props) {
-    const cartitems=useContext(CartItemsContext)
+    
   const history = useHistory();
 const booksInCart=useSelector(state=>state.cardquantity.items)
   const classes = useStyles();
