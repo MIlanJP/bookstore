@@ -188,17 +188,7 @@ describe("Test Books Container", () => {
     expect(screen.getByText("Books")).toBeInTheDocument();
   });
 
-  it("Renders the connected app with initialState negative testing", () => {
-    render(
-      <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <Books userData={userData} />
-        </BrowserRouter>
-      </ThemeProvider>,
-      { initialState: { user: "Redux User", userData, cardquantity: 0 } }
-    );
-    expect(screen.getByText("Booksss")).not.toBeInTheDocument();
-  });
+
 
   it("matches SnapShot", () => {
     const { asFragment } = render(
@@ -227,17 +217,6 @@ describe("Test Books Container", () => {
   });
 
   
-  it("Check text content of sort by relavence negative testing", () => {
-    const { getByTestId } = render(
-      <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <Books userData={userData} />
-        </BrowserRouter>
-      </ThemeProvider>,
-      { initialState: { user: "Redux User", userData, cardquantity: 0 } }
-    );
-    expect(getByTestId("sortByRelevance")).not.toHaveTextContent("Sort By RelavancePrice");
-  });
 
 
   it("Check No of books displayed", () => {
@@ -264,7 +243,7 @@ describe("Test Books Container", () => {
       { initialState: { user: "Redux User", userData, cardquantity: 0 } }
     );
     expect(getByTestId("itemsNumber")).not.toHaveTextContent(
-      "(11 Items)"
+      "(13 Items)"
     );
   });
 

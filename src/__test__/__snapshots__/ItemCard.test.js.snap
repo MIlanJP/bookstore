@@ -1,0 +1,120 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Books Container Renders the connected app if book present in cart 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiPaper-root MuiCard-root makeStyles-mainLayout-12 MuiPaper-elevation1 MuiPaper-rounded"
+  >
+    <div
+      class="makeStyles-bookImage-13"
+    >
+      <img
+        alt="The Girl in Room 105"
+        class="makeStyles-imageOfBook-14"
+        src="http://books.google.com/books/content?id=GHt_uwEACAAJ&printsec=frontcover&img=1&zoom=5"
+      />
+    </div>
+    <p
+      class="makeStyles-bookName-15"
+    >
+      The Girl in Room 105
+    </p>
+    <span
+      class="makeStyles-authorName-16"
+      data-testid="authorName"
+    >
+       by Chetan Bhagat
+    </span>
+    <p
+      class="makeStyles-priceColumn-17"
+      data-testid="priceColumn"
+    >
+      Rs 193
+    </p>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-text makeStyles-addedTOCartButton-22"
+      data-testid="added-to-cart-button"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        ADDED TO CART
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Test Books Container Renders the connected app with if book not present in cart 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiPaper-root MuiCard-root makeStyles-mainLayout-23 MuiPaper-elevation1 MuiPaper-rounded"
+  >
+    <div
+      class="makeStyles-bookImage-24"
+    >
+      <img
+        alt="Angels And Demons"
+        class="makeStyles-imageOfBook-25"
+        src="http://books.google.com/books/content?id=d5xgYw4Ts0gC&printsec=frontcover&img=1&zoom=5"
+      />
+    </div>
+    <p
+      class="makeStyles-bookName-26"
+    >
+      Angels And Demons
+    </p>
+    <span
+      class="makeStyles-authorName-27"
+      data-testid="authorName"
+    >
+       by Dan Brown
+    </span>
+    <p
+      class="makeStyles-priceColumn-28"
+      data-testid="priceColumn"
+    >
+      Rs 612
+    </p>
+    <div
+      class="makeStyles-buttonsColumn-30"
+    >
+      <button
+        class="MuiButtonBase-root MuiButton-root MuiButton-text makeStyles-addToCartButton-29"
+        data-testid="add-to-bag-button"
+        tabindex="0"
+        type="button"
+      >
+        <span
+          class="MuiButton-label"
+        >
+          ADD TO BAG
+        </span>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </button>
+      <button
+        class="MuiButtonBase-root MuiButton-root MuiButton-text makeStyles-wishListButton-31"
+        data-testid="wishlistButton"
+        tabindex="0"
+        type="button"
+      >
+        <span
+          class="MuiButton-label"
+        >
+          WISHLIST
+        </span>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

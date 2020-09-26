@@ -3,22 +3,22 @@
 exports[`Test Books Container matches SnapShot 1`] = `
 <DocumentFragment>
   <div
-    class="makeStyles-booksLength-17"
+    class="makeStyles-booksLength-11"
   >
     Books 
     <span
-      class="makeStyles-booksNumber-18"
+      class="makeStyles-booksNumber-12"
       data-testid="itemsNumber"
     >
       (0 Items)
     </span>
   </div>
   <div
-    class="MuiInputBase-root MuiInput-root MuiInput-underline makeStyles-selectEmpty-15"
+    class="MuiInputBase-root MuiInput-root MuiInput-underline makeStyles-selectEmpty-9"
     data-testid="sortByRelevance"
   >
     <select
-      class="MuiNativeSelect-root makeStyles-rootOfNativeSelect-16 MuiNativeSelect-select MuiInputBase-input MuiInput-input"
+      class="MuiNativeSelect-root makeStyles-rootOfNativeSelect-10 MuiNativeSelect-select MuiInputBase-input MuiInput-input"
       name=" Sort By Relavance"
     >
       <option

@@ -118,7 +118,7 @@ const items = useSelector((state) => state.cardquantity.items);
     <Card className={classes.mainLayout}>
       <div className={classes.bookImage}>
         {props.book.quantity > 0 ? null : (
-          <div className={classes.outOfStock}>OUT OF STOCK</div>
+          <div  data-testid="out-of-stock-tag"    className={classes.outOfStock}>OUT OF STOCK</div>
         )}
         <img
           className={classes.imageOfBook}
@@ -130,14 +130,17 @@ const items = useSelector((state) => state.cardquantity.items);
       <p className={classes.bookName} >
         {props.book.title}
       </p>
-      <span className={classes.authorName}> by {props.book.author}</span>
-      <p className={classes.priceColumn}>Rs {props.book.price}</p>
+      <span className={classes.authorName} data-testid="authorName"  > by {props.book.author}</span>
+      <p className={classes.priceColumn} data-testid="priceColumn"  >Rs {props.book.price}</p>
       {displayAddedButton ? (
-        <Button className={classes.addedTOCartButton}>ADDED TO CART</Button>
+        <Button className={classes.addedTOCartButton}
+        data-testid="added-to-cart-button" 
+        >ADDED TO CART</Button>
       ) : (
         <div className={classes.buttonsColumn}>
           {props.book.quantity > 0 ? (
             <Button
+            data-testid="add-to-bag-button" 
               className={classes.addToCartButton}
               onClick={(e) => {
                
@@ -171,7 +174,7 @@ const items = useSelector((state) => state.cardquantity.items);
             </Button>
           ) : null}
 
-          <Button className={classes.wishListButton}>WISHLIST</Button>
+          <Button  data-testid="wishlistButton"    className={classes.wishListButton}>WISHLIST</Button>
         </div>
       )}
     </Card>
