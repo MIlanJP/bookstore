@@ -78,7 +78,7 @@ const userData = {
 describe("Test Books Container", () => {
   afterEach(cleanup);
   it("Renders the connected app with initialState without error", () => {
-    render(
+    const {getByTestId}=render(
       <ThemeProvider theme={theme}>
         <BrowserRouter>
           <ItemCard userData={userData} book={bookList[0]} />
@@ -87,6 +87,10 @@ describe("Test Books Container", () => {
       { initialState: { user: "Redux User", userData, cardquantity: 0 } }
       
     );
+    expect(getByTestId("authorName" )).toHaveTextContent("Chetan Bhagat")
+    expect(getByTestId("priceColumn" )).toHaveTextContent("Rs 193")
+    expect(getByTestId("bookTitle" )).toHaveTextContent("The Girl in Room 105")
+    
     expect(screen.getByText("ADDED TO CART")).toBeInTheDocument();
   });
 
@@ -128,6 +132,19 @@ describe("Test Books Container", () => {
      expect(getByTestId("add-to-bag-button" )).toHaveTextContent("ADD TO BAG")
    });
 
+   
+   it("Should not render the Add to cart button when book is in cart", () => {
+    const {queryAllByTestId}= render(
+       <ThemeProvider theme={theme}>
+         <BrowserRouter>
+           <ItemCard userData={userData} book={bookList[0]} />
+         </BrowserRouter>
+       </ThemeProvider>,
+       { initialState: { user: "Redux User", userData, cardquantity: 0 } }
+     );
+     expect(queryAllByTestId("add-to-bag-button" )).toHaveLength(0)
+   });
+
 
    it("Renders Add To cart button if book is not present in cart", () => {
     const {getByTestId}= render(
@@ -141,6 +158,19 @@ describe("Test Books Container", () => {
      expect(getByTestId("wishlistButton" )).toHaveTextContent("WISHLIST")
    });
 
+   it("Should not render the wishlist button when book is in cart", () => {
+    const {queryAllByTestId}= render(
+       <ThemeProvider theme={theme}>
+         <BrowserRouter>
+           <ItemCard userData={userData} book={bookList[0]} />
+         </BrowserRouter>
+       </ThemeProvider>,
+       { initialState: { user: "Redux User", userData, cardquantity: 0 } }
+     );
+     expect(queryAllByTestId("wishlistButton" )).toHaveLength(0)
+   });
+
+
   it("Renders Added to Cart button if book is present in the cart", () => {
     const {getByTestId}= render(
        <ThemeProvider theme={theme}>
@@ -151,7 +181,21 @@ describe("Test Books Container", () => {
        { initialState: { user: "Redux User", userData, cardquantity: 0 } }
      );
      expect(getByTestId("added-to-cart-button" )).toHaveTextContent("ADDED TO CART")
+    });
+
+      it("Does not render the ADDED TO CART button when book not in cart", () => {
+    const {queryAllByTestId}= render(
+       <ThemeProvider theme={theme}>
+         <BrowserRouter>
+           <ItemCard userData={userData} book={book} />
+         </BrowserRouter>
+       </ThemeProvider>,
+       { initialState: { user: "Redux User", userData, cardquantity: 0 } }
+     );
+     expect(queryAllByTestId("added-to-cart-button" )).toHaveLength(0)
    });
+
+
 
    it("Renders out of stock tag when quantity of book is zero", () => {
     const {getByTestId}= render(
@@ -165,8 +209,8 @@ describe("Test Books Container", () => {
      expect(getByTestId("out-of-stock-tag" )).toHaveTextContent("OUT OF STOCK")
    });
 
-   it("Renders out of stock tag when quantity of book is zero", () => {
-    const {getByTestId}= render(
+   it("Does not render out of stock when book is in stock", () => {
+    const {queryAllByTestId}= render(
        <ThemeProvider theme={theme}>
          <BrowserRouter>
            <ItemCard userData={userData} book={book} />
@@ -174,7 +218,7 @@ describe("Test Books Container", () => {
        </ThemeProvider>,
        { initialState: { user: "Redux User", userData, cardquantity: 0 } }
      );
-     expect(getByTestId("out-of-stock-tag" )).toBeNull()
+     expect(queryAllByTestId("out-of-stock-tag" )).toHaveLength(0)
    });
 
 

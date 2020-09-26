@@ -16,6 +16,7 @@ exports[`Test Books Container Renders the connected app if book present in cart 
     </div>
     <p
       class="makeStyles-bookName-15"
+      data-testid="bookTitle"
     >
       The Girl in Room 105
     </p>
@@ -66,6 +67,7 @@ exports[`Test Books Container Renders the connected app with if book not present
     </div>
     <p
       class="makeStyles-bookName-26"
+      data-testid="bookTitle"
     >
       Angels And Demons
     </p>

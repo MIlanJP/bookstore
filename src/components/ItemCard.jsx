@@ -127,7 +127,9 @@ const items = useSelector((state) => state.cardquantity.items);
         />
       </div>
 
-      <p className={classes.bookName} >
+      <p className={classes.bookName} 
+      data-testid="bookTitle"
+      >
         {props.book.title}
       </p>
       <span className={classes.authorName} data-testid="authorName"  > by {props.book.author}</span>
