@@ -46,6 +46,7 @@ exports[`render profile page Match SnapShot for profile page 1`] = `
           </h6>
           <div
             class="makeStyles-search-16"
+            data-testid="search"
           >
             <div
               class="makeStyles-searchIcon-17"
@@ -90,6 +91,7 @@ exports[`render profile page Match SnapShot for profile page 1`] = `
               >
                 <span
                   class="MuiBadge-root"
+                  data-testid="badge"
                 >
                   <svg
                     aria-hidden="true"

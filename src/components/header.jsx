@@ -163,8 +163,9 @@ const handleClickForCart=()=>{
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem   onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem
+      data-testid="logoutButton"
         onClick={() => {
           handleMenuClose();
           auth.signOut();
@@ -240,7 +241,7 @@ const handleClickForCart=()=>{
           >
             Bookstore
           </Typography>
-          <div className={classes.search}>
+          <div className={classes.search} data-testid="search"  >
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
@@ -262,7 +263,7 @@ const handleClickForCart=()=>{
             <IconButton aria-label={`show ${props.userData.booksInCart} Items in Carts`} color="inherit"
             onClick={handleClickForCart}
             >
-              <Badge badgeContent={booksInCart} color="secondary" key={props.userData.booksInCart}>
+              <Badge data-testid="badge"  badgeContent={booksInCart} color="secondary" key={props.userData.booksInCart}>
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
